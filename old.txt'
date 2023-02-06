@@ -1,0 +1,182 @@
+# -*- coding: utf-8 -*-
+
+import time
+from random import random, randint
+
+import requests
+
+
+def request_game(game_id):
+    headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:107.0) Gecko/20100101 Firefox/107.0',
+               'Accept': 'application/json, text/plain, */*',
+               'Accept-Language': 'ru-RU,ru;q=0.8,en-US;q=0.5,en;q=0.3',
+               'Accept-Encoding': 'gzip, deflate',
+               'Content-Type': 'application/json',
+               'Content-Length': '15',
+               'Origin': 'https://www.kinopoisk.ru',
+               'Referer': 'https://www.kinopoisk.ru/',
+               'Sec-Fetch-Dest': 'empty',
+               'Sec-Fetch-Mode': 'cors',
+               'Sec-Fetch-Site': 'same-site',
+               'Te': 'trailers',
+               'Connection': 'close'
+               }
+
+    # 'yandex_login': 'adelinam110',
+    # 'yandex_login': 'KiyamovSB',
+    cookies = {'_yasc': 'YPDM/6tVPtZige3JvKh3Cb39tqCZrJevNmd4CurPUJc+ZG8OufTTa+im/zmq6g==',
+                'i': 'A5L/QJXVNddjgG8glvcj+2cTPrzG+aCGHFqAeJoRRKTGFb+Uy0WfIm8kGmtjPo4YBcJWrCsv3XbA5ENvS1MbTAugPnU=',
+                'gdpr': '0',
+                '_ym_uid': '1669242985719281132',
+                '_ym_d': '1670177469',
+                'ya_sess_id': '3:1670107890.5.0.1670107889287:sjTNsg:28.1.2:1|377002131.-1.2|30:10212088.606735.ZVH2YOk-V29saFmCXlQkPvmJ_2E',
+                'yandex_login': 'KiyamovSB',
+                'yandexuid': '5877639861669243026',
+                'mda2_beacon': '1670107890193',
+                'yuidss': '4392623481669243023',
+                'yp': '1670024886.yu.4392623481669243023',
+                'ymex': '1672530486.oyu.4392623481669243023',
+                '_ym_isad': '2'
+               }
+
+    result = requests.request(method='post',
+                              url='https://kp-guess-game-api.kinopoisk.ru/v1/games',
+                              cookies=cookies,
+                              headers=headers,
+                              json={"gameId": game_id}
+                              )
+
+    return result
+
+
+def request_answer(answer):
+    headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:107.0) Gecko/20100101 Firefox/107.0',
+               'Accept': 'application/json, text/plain, */*',
+               'Accept-Language': 'ru-RU,ru;q=0.8,en-US;q=0.5,en;q=0.3',
+               'Accept-Encoding': 'gzip, deflate',
+               'Content-Type': 'application/json',
+               'Content-Length': '18',
+               'Origin': 'https://www.kinopoisk.ru',
+               'Referer': 'https://www.kinopoisk.ru/',
+               'Sec-Fetch-Dest': 'empty',
+               'Sec-Fetch-Mode': 'cors',
+               'Sec-Fetch-Site': 'same-site',
+               'Te': 'trailers',
+               'Connection': 'close'
+               }
+
+    # 'yandex_login': 'adelinam110',
+    # 'yandex_login': 'KiyamovSB',
+    cookies = {'_yasc': 'YPDM/6tVPtZige3JvKh3Cb39tqCZrJevNmd4CurPUJc+ZG8OufTTa+im/zmq6g==',
+                'i': 'A5L/QJXVNddjgG8glvcj+2cTPrzG+aCGHFqAeJoRRKTGFb+Uy0WfIm8kGmtjPo4YBcJWrCsv3XbA5ENvS1MbTAugPnU=',
+                'gdpr': '0',
+                '_ym_uid': '1669242985719281132',
+                '_ym_d': '1670177469',
+                'ya_sess_id': '3:1670107890.5.0.1670107889287:sjTNsg:28.1.2:1|377002131.-1.2|30:10212088.606735.ZVH2YOk-V29saFmCXlQkPvmJ_2E',
+                'yandex_login': 'KiyamovSB',
+                'yandexuid': '5877639861669243026',
+                'mda2_beacon': '1670107890193',
+                'yuidss': '4392623481669243023',
+                'yp': '1670024886.yu.4392623481669243023',
+                'ymex': '1672530486.oyu.4392623481669243023',
+                '_ym_isad': '2'
+               }
+
+    result = requests.request(method='post',
+                              url='https://kp-guess-game-api.kinopoisk.ru/v1/questions/answers',
+                              cookies=cookies,
+                              headers=headers,
+                              json={"answer": answer}
+                              )
+
+    return result
+
+point_needs = {1:70,
+               2:65,
+               3:50,
+               4:94, # max 94
+               5:49,
+               6:49,
+               7:49,
+               8:49, # max 49
+               9:49,
+               10:49,
+               11:49,
+               12:49,
+               13:48, # max 48
+               14:49,
+               15:197 # max 197
+               }
+
+game_ids = [13]
+for game_id in game_ids:
+    point = 0
+
+    dict_id_answer = {21: '6', 29: 'Знание монологов из «Макбета»', 18: 'Брэдли Купер', 46: 'Мэри Поппинс', 34: '«Мстители»', 49: 'Black Sabbath — Paranoid', 41: 'Пресекает временные преступления и изменения истории', 7: 'Клинт должен был убить Наташу, сбежавшую из Красной комнаты, но передумал', 33: '«Ванда/Вижен»', 42: '«Железный человек»', 1: 'Кевин Файги', 17: '«Мстители»', 10: 'Около недели', 9: '«Первый мститель»', 14: '2011', 40: 'Стив Роджерс и Вижен', 25: 'Металл из сердца гаснущей звезды', 20: 'Энергичными танцами и пением', 3: 'Shawarma Palace', 11: '6', 36: '«Златовласка»', 19: '«Групповые обьятья»', 2: '23', 48: '«Мстители: Финал»', 50: '«Я пришел договориться»', 45: 'Ни с кем, в сериале они даже не упоминаются', 26: 'The Jackson 5 — I Want You Back', 39: 'Зловещая шестерка', 27: 'Выглядят как котики', 31: 'Перчатка', 8: '«Халк»', 47: 'Вижен смог поднять Мьёльнир', 30: 'Глаз', 22: '«Невероятный Халк»', 43: '«Защищаю вашу реальность»', 16: 'Громсекира', 38: 'Глаз Агамотто', 28: '«Стражи Галактики. Часть 2»', 15: 'Galaga и Fortnite', 35: 'Камень души', 32: 'Домушником', 4: 'Собирал информацию о Мстителях для древнейшей расы инопланетян', 12: "Джек Николсон и Питер О'Тул", 13: 'Покрасила волосы в красный, как у героини в комиксах', 23: 'Ключ-карта от подсобки', 24: 'Хоукай', 37: 'Тони Старк и Стив Роджерс по-разному восприняли разработанный ООН «Заковианский договор»'}
+
+    # file_name = str(game_id) + '.txt'
+    # with open(file_name, encoding='utf-8') as file:
+    #     for line in file:
+    #         key, value = line.split(":: ")
+    #         dict_id_answer[key] = value
+
+    while point < point_needs.get(game_id):
+        result = request_game(game_id)
+        state = 'game'
+        livesLeft = 3
+
+        while state == 'game':
+            random_int = randint(0, 3)
+            id = result.json()['stateData']['question']['id']
+            if dict_id_answer.get(id, False):
+                answer = dict_id_answer.get(id)
+            else:
+                answer = result.json()['stateData']['question']['answers'][random_int]
+    #            [0].split("\"\,")[random_int]
+
+            point = result.json()['stateData']['points']
+            # if point >= point_needs.get(game_id):
+            #     break
+
+            # try:
+            #     is_correct_answer = result.json()['isCorrect']
+            # except:
+            #     is_correct_answer = False
+
+            print(answer)
+            result = request_answer(answer)
+            is_correct_answer = result.json()['isCorrect']
+            if is_correct_answer:
+                dict_id_answer.update({id: answer})
+            else:
+                dict_id_answer.update({id: result.json()['correctAnswer']})
+
+            state = result.json()['stateData']['state']
+            livesLeft = result.json()['stateData']['livesLeft']
+
+            print(is_correct_answer)
+            print(result.json())
+            # time.sleep(random()*4+0.1)
+            time.sleep(random() * 1.5 + 0.1)
+
+    print(dict_id_answer)
+    # if
+#
+# if dict.get(id, "") != "":
+
+
+# while state == 'game':
+#     if
+#     request_answer(answer)
+
+
+
+
+
+# answer = result.json()['stateData']['question']['answers'][0].split(',')[0]
+
+# print(result_2)
+#
+# print(result_2.headers)
+#
+# print(result_2.json())
